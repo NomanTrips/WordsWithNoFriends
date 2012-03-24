@@ -1,0 +1,62 @@
+require 'mysql'  
+
+class Calc
+
+def self.gen_sql(arr)
+	# Local variables
+	select = "select * from dictionary where"
+	# End Local variables
+
+	# Begin sql generation based off passed in parameters
+	sql =''
+	if arr.size == 10 then
+		arr[9] = ''
+	end 
+	arr.each_with_index do
+		|letter, index| 
+		if letter != '' then 
+			if sql.empty? then
+				sql = select + " INSTR(word, '#{letter}')"
+			else
+				sql = sql + " AND " + "INSTR(word, '#{letter}')"
+			end
+		end
+	end
+	if arr.size != 10 then # if size is ten then don't add length modifier to query
+		sql = sql +" AND "+"CHAR_LENGTH(word) = #{arr.size}"	
+	end
+	return sql
+end
+
+def self.find(params)
+	i= 1+1
+	#return i
+	puts params.size
+	params.each do
+		|p|
+		puts p
+	end
+		
+	#puts('First letter:')
+	#letter = gets().strip # strip removes whitepace 
+	#puts('Word length:')
+	#length = gets().strip
+	arr=[]
+	arr1 = params #.split(/,/)
+	#puts params[3].to_s
+	#arr1 = ['c',' ','t']
+
+	con = Mysql.new('localhost', 'root', 'root', 'test') # connect to mysql db
+
+	rs = con.query(self.gen_sql(arr1))
+
+	result =""
+	# Run query against dictionary with word length and first letter as filters 
+	#rs = con.query("select * from dictionary where INSTR(word, '#{letter}')=1 AND CHAR_LENGTH(word) = #{length}") 
+	rs.each { |h| result = result + h[0] + '<br>'} # output result set 
+	con.close
+	return result
+end
+
+
+end

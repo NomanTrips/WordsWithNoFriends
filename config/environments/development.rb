@@ -1,4 +1,4 @@
-SampleApp::Application.configure do
+WordsWithNoFriends::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -27,4 +27,7 @@ SampleApp::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Fix 2/5/12 ruby interepreter crashing http://stackoverflow.com/questions/5372888/ruby-interpreter-cui-1-9-2p180-i386-mingw32-has-stopped-working-i-am-not-us
+  config.log_level = :warn
 end
