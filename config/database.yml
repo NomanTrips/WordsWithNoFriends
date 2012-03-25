@@ -1,8 +1,4 @@
 
-
-
-
-
 development:
   adapter: mysql  # Rails 3.x uses the mysql2 adapter
   encoding: utf8
@@ -26,8 +22,8 @@ test:
 production:
   adapter: mysql  # Rails 3.x uses the mysql2 adapter
   encoding: utf8
-  database: test
-  username: root
-  password: root
-  host: localhost
+  database: heroku_d992a58a4ee5694
+  username: b40be111cafd59
+  password: d0ca9452
+  host: us-cdbr-east.cleardb.com
   socket: /tmp/mysql.sock 
