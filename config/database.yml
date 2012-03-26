@@ -1,4 +1,6 @@
 
+
+
 development:
   adapter: mysql  # Rails 3.x uses the mysql2 adapter
   encoding: utf8
