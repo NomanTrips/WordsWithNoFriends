@@ -3,7 +3,7 @@ WordsWithNoFriends::Application.routes.draw do
 
   get "pages/wordswithnofriends"
   
-  #root :to => 'Pages#wordswithnofriends'
+  root :to => 'Pages#wordswithnofriends'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
