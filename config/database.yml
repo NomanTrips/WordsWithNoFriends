@@ -25,10 +25,9 @@ test:
 production:
   adapter: postgresql  # Rails 3.x uses the mysql2 adapter
   encoding: unicode
-  database: words
-  username: postgres
-  password: root
-  host: localhost
-  port: 5432
+  database: hrwupgvufs
+  username: hrwupgvufs
+  password: bYnTGuMWqubAuJiUqNo9
+  host: ec2-23-21-140-215.compute-1.amazonaws.com
 
  
