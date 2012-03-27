@@ -65,7 +65,7 @@ class WordsDictionary
 		rs = con.query(self.build_sql_query(letters, options)) 
 		result =""
 		# Run query against dictionary with word length and first letter as filters 
-		rs.each { |h| result = result + h[0] + '<br>'} # result : concatentated query results as HTML w <br>
+		rs.each { |h| result = result + h[0].to_s + '<br>'} # result : concatentated query results as HTML w <br>
 		con.close
 		return result
 	end
