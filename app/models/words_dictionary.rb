@@ -49,7 +49,8 @@ class WordsDictionary
 		if not noLength then # Length Specified by passed in option! Only return results == letter array(params)
 			sql = sql +" AND "+"CHAR_LENGTH(word) = #{letters.size}"	
 		end
-		puts sql
+		sql = sql +" AND POSITION(' ' in word)= 0" # Narrow results to words with no spaces like 'a priori'
+		sql = sql + " LIMIT 100" # there could potentially be 100,000 + results if not limited
 		return sql
 	end
 
@@ -60,13 +61,12 @@ class WordsDictionary
 
 
 		#con = PGconn.new('localhost', '5432', 'postgres', 'root', 'words')
-		con = PGconn.new('ec2-23-21-140-215.compute-1.amazonaws.com', '', '', '', 'hrwupgvufs', 'hrwupgvufs', 'bYnTGuMWqubAuJiUqNo9') 
-		#con = PGconn.new('localhost', 5432, '', '', 'words', 'postgres', 'root')
+		#con = PGconn.new('ec2-23-21-140-215.compute-1.amazonaws.com', '', '', '', 'hrwupgvufs', 'hrwupgvufs', 'bYnTGuMWqubAuJiUqNo9') 
+		con = PGconn.new('localhost', 5432, '', '', 'words', 'postgres', 'root')
 		#con = PGconn.connect_start( CONN_OPTS )
 		rs = con.exec(self.build_sql_query(letters, options)) 
 		result =""
 		# Run query against dictionary with word length and first letter as filters 
-		puts 'cameback'
 		i = rs.fnumber('word')
 		#rs.each { |h| result = result + h[0].to_s + '<br>'} # result : concatentated query results as HTML w <br>
 		rs.each_with_index { |h, index| result = result + rs.getvalue(index, i)+ '<br>'} # result : concatentated query results as HTML w <br>
