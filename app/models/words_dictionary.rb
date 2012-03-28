@@ -51,6 +51,7 @@ class WordsDictionary
 		end
 		sql = sql +" AND POSITION(' ' in word)= 0" # Narrow results to words with no spaces like 'a priori'
 		sql = sql + " LIMIT 100" # there could potentially be 100,000 + results if not limited
+		#puts sql
 		return sql
 	end
 
@@ -65,6 +66,7 @@ class WordsDictionary
 		#con = PGconn.new('localhost', 5432, '', '', 'words', 'postgres', 'root')
 		#con = PGconn.connect_start( CONN_OPTS )
 		rs = con.exec(self.build_sql_query(letters, options)) 
+		puts 'rows: '+ rs.ntuples().to_s
 		result =""
 		# Run query against dictionary with word length and first letter as filters 
 		i = rs.fnumber('word')
