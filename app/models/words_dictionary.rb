@@ -61,8 +61,8 @@ class WordsDictionary
 
 
 		#con = PGconn.new('localhost', '5432', 'postgres', 'root', 'words')
-		#con = PGconn.new('ec2-23-21-140-215.compute-1.amazonaws.com', '', '', '', 'hrwupgvufs', 'hrwupgvufs', 'bYnTGuMWqubAuJiUqNo9') 
-		con = PGconn.new('localhost', 5432, '', '', 'words', 'postgres', 'root')
+		con = PGconn.new('ec2-23-21-140-215.compute-1.amazonaws.com', '', '', '', 'hrwupgvufs', 'hrwupgvufs', 'bYnTGuMWqubAuJiUqNo9') 
+		#con = PGconn.new('localhost', 5432, '', '', 'words', 'postgres', 'root')
 		#con = PGconn.connect_start( CONN_OPTS )
 		rs = con.exec(self.build_sql_query(letters, options)) 
 		result =""
