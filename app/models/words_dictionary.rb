@@ -32,15 +32,15 @@ class WordsDictionary
 			if letter != '' then 
 				if sql.empty? then # Start the sql string
 					if noPosition then 
-						sql = select + " POSITION('#{letter}' in word)" # Ignore position
+						sql = select + " POSITION(UPPER('#{letter}') in UPPER(word)) >0" # Ignore position
 					else
-						sql = select + " POSITION('#{letter}' in word)=#{index+1}" # Return only results w letter at index
+						sql = select + " POSITION(UPPER('#{letter}') in UPPER(word))=#{index+1}" # Return only results w letter at index
 					end
 				else # continue sql statment w AND
 					if noPosition then
-						sql = sql + " AND " + "POSITION('#{letter}' in word)"
+						sql = sql + " AND " + "POSITION(UPPER('#{letter}') in UPPER(word)) >0"
 					else
-						sql = sql + " AND " + "POSITION('#{letter}' in word)=#{index+1}"
+						sql = sql + " AND " + "POSITION(UPPER('#{letter}') in UPPER(word))=#{index+1}"
 					end
 				end
 			end
@@ -61,11 +61,15 @@ class WordsDictionary
 
 		#con = PGconn.new('localhost', '5432', 'postgres', 'root', 'words')
 		con = PGconn.new('ec2-23-21-140-215.compute-1.amazonaws.com', '', '', '', 'hrwupgvufs', 'hrwupgvufs', 'bYnTGuMWqubAuJiUqNo9') 
+		#con = PGconn.new('localhost', 5432, '', '', 'words', 'postgres', 'root')
 		#con = PGconn.connect_start( CONN_OPTS )
-		rs = con.query(self.build_sql_query(letters, options)) 
+		rs = con.exec(self.build_sql_query(letters, options)) 
 		result =""
 		# Run query against dictionary with word length and first letter as filters 
-		rs.each { |h| result = result + h[0].to_s + '<br>'} # result : concatentated query results as HTML w <br>
+		puts 'cameback'
+		i = rs.fnumber('word')
+		#rs.each { |h| result = result + h[0].to_s + '<br>'} # result : concatentated query results as HTML w <br>
+		rs.each_with_index { |h, index| result = result + rs.getvalue(index, i)+ '<br>'} # result : concatentated query results as HTML w <br>
 		con.close
 		return result
 	end
