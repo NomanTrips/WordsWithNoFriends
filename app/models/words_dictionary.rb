@@ -50,7 +50,7 @@ class WordsDictionary
 			sql = sql +" AND "+"CHAR_LENGTH(word) = #{letters.size}"	
 		end
 		sql = sql +" AND POSITION(' ' in word)= 0" # Narrow results to words with no spaces like 'a priori'
-		sql = sql + " LIMIT 100" # there could potentially be 100,000 + results if not limited
+		#sql = sql + " LIMIT 100" # there could potentially be 100,000 + results if not limited
 		#puts sql
 		return sql
 	end
