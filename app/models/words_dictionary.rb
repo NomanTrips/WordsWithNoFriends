@@ -50,8 +50,8 @@ class WordsDictionary
 
 	# Connects to pg DB and runs a word search query against it. Returns HMTL string of query results
 	def self.find_words(letters, options)
-		#con = PGconn.new('ec2-23-21-140-215.compute-1.amazonaws.com', '', '', '', 'hrwupgvufs', 'hrwupgvufs', 'bYnTGuMWqubAuJiUqNo9') 
-		con = PGconn.new('localhost', 5432, '', '', 'words', 'postgres', 'root')
+		con = PGconn.new('ec2-23-21-140-215.compute-1.amazonaws.com', '', '', '', 'hrwupgvufs', 'hrwupgvufs', 'bYnTGuMWqubAuJiUqNo9') 
+		#con = PGconn.new('localhost', 5432, '', '', 'words', 'postgres', 'root')
 		rs = con.exec(self.build_sql_query(letters, options)) 
 		puts 'rows: '+ rs.ntuples().to_s
 		result =""
