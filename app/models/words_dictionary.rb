@@ -1,11 +1,5 @@
 require 'pg'  
 
-		TIMEOUT = 5.0 # seconds to wait for an async operation to complete
-		CONN_OPTS = {
-		    :dbname => 'words',
-		    :user => 'postgres',
-		}
-
 class WordsDictionary
 
 	# Builds the word search query based of the letters and options hash passed in
@@ -50,28 +44,21 @@ class WordsDictionary
 			sql = sql +" AND "+"CHAR_LENGTH(word) = #{letters.size}"	
 		end
 		sql = sql +" AND POSITION(' ' in word)= 0" # Narrow results to words with no spaces like 'a priori'
-		#sql = sql + " LIMIT 100" # there could potentially be 100,000 + results if not limited
-		#puts sql
+		sql = sql + " LIMIT 100" 
 		return sql
 	end
 
-	# Connects to mysql DB and runs a word search query against it. Returns HMTL string of query results
+	# Connects to pg DB and runs a word search query against it. Returns HMTL string of query results
 	def self.find_words(letters, options)
-		#con = pg.new('localhost', 'postgres', 'root', 'words') # connect to mysql db
-
-
-
-		#con = PGconn.new('localhost', '5432', 'postgres', 'root', 'words')
 		con = PGconn.new('ec2-23-21-140-215.compute-1.amazonaws.com', '', '', '', 'hrwupgvufs', 'hrwupgvufs', 'bYnTGuMWqubAuJiUqNo9') 
 		#con = PGconn.new('localhost', 5432, '', '', 'words', 'postgres', 'root')
-		#con = PGconn.connect_start( CONN_OPTS )
 		rs = con.exec(self.build_sql_query(letters, options)) 
 		puts 'rows: '+ rs.ntuples().to_s
 		result =""
 		# Run query against dictionary with word length and first letter as filters 
 		i = rs.fnumber('word')
 		#rs.each { |h| result = result + h[0].to_s + '<br>'} # result : concatentated query results as HTML w <br>
-		rs.each_with_index { |h, index| result = result + rs.getvalue(index, i)+ '<br>'} # result : concatentated query results as HTML w <br>
+		rs.each_with_index { |h, index| result = result + rs.getvalue(index, i)+ '<br>'} 
 		con.close
 		return result
 	end
