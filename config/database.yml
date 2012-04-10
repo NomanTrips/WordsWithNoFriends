@@ -6,7 +6,7 @@ development:
   encoding: unicode
   database: words
   username: postgres
-  password: root
+  password: 
   host: localhost
   port: 5432
   reconnect: true
@@ -18,16 +18,10 @@ test:
   encoding: unicode
   database: words
   username: postgres
-  password: root
+  password:
   host: localhost
   port: 5432
 
-production:
-  adapter: postgresql  # Rails 3.x uses the mysql2 adapter
-  encoding: unicode
-  database: hrwupgvufs
-  username: hrwupgvufs
-  password: bYnTGuMWqubAuJiUqNo9
-  host: ec2-23-21-140-215.compute-1.amazonaws.com
+
 
  
